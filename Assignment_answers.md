@@ -179,6 +179,28 @@ A stack can be used to ensure that an arithmetic expression has balanced parenth
 ### Part 5: Sort stack
 Write a program to sort a stack such that the smallest items are on the top (in ascending order). You can use an additional stack, but you may not use any other data structure (such as an array, or linked list).
 
+```
+sortStack : (stackA) =>{
+    for(let i = 0 ; i < stackA.length ; i++){
+      if(isNaN(stackA[i]))stackA[i] = 0; 
+    }
+    let stackB = [];
+    let temp; 
+  
+    while(stackA.length){
+      temp = stackA.pop();
+      while( temp !== null) {
+        if(temp <= stackB[stackB.length-1] || stackB.length === 0){
+          stackB.push(temp);
+          temp = null;
+        }else{
+          stackA.push(stackB.pop());
+        }
+      }
+    }
+    return stackB;
+  },
+```
 
 
 ### Part 6: Create a queue using Singly linked list

@@ -65,7 +65,28 @@ const STORE ={
       i++, l--;
     }
     return true; 
-  }
+  },
+  sortStack : (stackA) =>{
+    for(let i = 0 ; i < stackA.length ; i++){
+      if(isNaN(stackA[i]))stackA[i] = 0; 
+    }
+    let stackB = [];
+    let temp; 
+  
+    while(stackA.length){
+      temp = stackA.pop();
+      while( temp !== null) {
+        if(temp <= stackB[stackB.length-1] || stackB.length === 0){
+          stackB.push(temp);
+          temp = null;
+        }else{
+          stackA.push(stackB.pop());
+        }
+      }
+    }
+    return stackB;
+  },
+
 };
 
 module.exports= {
