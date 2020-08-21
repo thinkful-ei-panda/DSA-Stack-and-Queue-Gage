@@ -52,7 +52,19 @@ const STORE ={
     store.next = temp.next; 
 
     return lis.top = store; 
-
+  },
+  ifPalindromes  : (str) => {
+    str = str.toLowerCase().replace(/[^a-zA-Z0-9]/g,'');
+    if(typeof str !== 'string'){
+      throw new Error('not a string');
+    }
+    let l = str.length; 
+    let i = 0 ; 
+    while (i < str.length){
+      if(str[i] !== str[l - 1]) return false;      
+      i++, l--;
+    }
+    return true; 
   }
 };
 

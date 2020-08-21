@@ -117,7 +117,50 @@ console.log(is_palindrome("A man, a plan, a canal: Panama"));
 console.log(is_palindrome("1001"));
 console.log(is_palindrome("Tauhida"));
 ```
+###### my work
 
+```
+  ifPalindromes  : (str) => {
+    str = str.toLowerCase().replace(/[^a-zA-Z0-9]/g,'');
+    if(typeof str !== 'string'){
+      throw new Error('not a string');
+    }
+    let l = str.length; 
+    let i = 0 ; 
+    while (i < str.length){
+      if(str[i] !== str[l - 1]) return false;      
+      i++, l--;
+    }
+    return true; 
+  }
+```
+**resorts**
+```
+[
+  true, 
+  true,
+  false,
+  true,
+  false,
+  true,
+  'dad',
+  'level',
+  'false',
+  '1001',
+  'Tauhida',
+  'A man, a plan, a canal: Panama'
+]
+/*
+[
+  true, = (dad)
+  true, = (level)
+  false, = (false)
+  true, = (1001)
+  false, = (Tauhida)
+  true, = (A man, a plan, a canal: Panama)
+]
+*/
+```
 
 
 
