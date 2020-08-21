@@ -3,14 +3,99 @@ Walk through the `Stack` class in the curriculum and understand it well. Then wr
 
 - Create a stack called `starTrek` and add `Kirk`, `Spock`, `McCoy`, and `Scotty` to the stack.
 
+see `./stack/stack.js`
+and `./queue/queue.js`
+
 
 ### Part 2: Useful methods for a stack
 - Using the `Stack` class above, implement the following helper functions outside of the class:
 - `peek()`: allows you to look at the top of the stack without removing it
+
+```
+  peak : (lis) =>{
+    if(typeof lis !== 'object') throw new Error('not an object');
+
+    if(lis.top === null)
+      return 'the stack is empty';
+    return lis.top.data;
+  },
+```
+
 - `isEmpty()`: allows you to check if the stack is empty or not
+
+```
+  isEmpty : (lis)=>{
+    if(typeof lis !== 'object') throw new Error('not an object');
+    if(lis.top === null) return true;
+    return false;
+  },
+```
+returns `false` if there is content.
+
 - `display()`: to display the stack - what is the 1st item in your stack?
+
+```
+  display : (lis) =>{
+    if(typeof lis !== 'object') throw new Error('not an object');
+
+    if(lis.top === null)return 'nothing to display';
+    let { top } = lis;
+    let res = '';
+    let i = 1;
+    while(top !== null){
+      res += `item ${i}: ${top.data}\n`;
+      top = top.next , i++ ;
+    }
+    return res; 
+  },
+```
+results are in a string and look like 
+```
+item 1: Scotty
+item 2: McCoy
+item 3: Spock
+item 4: Kirk
+
+```
+
 - Remove `McCoy` from your stack and display the stack
 
+(눈_눈) ....
+
+```
+  removeTarget : (lis,target)=>{
+    if(typeof lis !== 'object') throw new Error('not an object');
+    const { top } = lis;
+    if(top === null) return 'nothing to remove';
+
+    let store = null, temp = top; 
+
+    if(temp !== null && temp.data === target ){
+      lis.top = temp.next;
+      return lis;
+    }
+
+    while((temp !== null) && (temp.data !== target)){
+      store = temp;
+      temp = temp.next;
+    }
+    if(temp === null) return 'nothing could be found , nothing removed';
+    
+    store.next = temp.next; 
+
+    return lis.top = store; 
+  }
+```
+
+log reads 
+```
+item 1: Scotty
+item 2: Spock
+item 3: Kirk
+```
+after calling display post remova
+***note***
+only down side about this function is when you call it make sure you have `listName.top = removeTarget(listName, target)` or it only returns the head with can be a pain if you try to call other functions latter. 
 
 
 
@@ -100,6 +185,6 @@ As people come to the dance floor, they should be paired off as quickly as possi
     - Female dancer is Madonna, and the male dancer is John
     - Female dancer is Beyonce, and the male dancer is Sherlock
     - There are 2 male dancers waiting to dance
-    
+
 ### Part 10: The Ophidian Bank
 At the Ophidian Bank, a single teller serves a long queue of people. New customers join the end of the queue, and the teller will serve a customer only if they have all of the appropriate paperwork. Write a representation of this queue; 25% of the time (random), a customer's paperwork isn't quite right, and it's back to the end of the queue. Show what a few minutes of the bank's lobby would look like.
