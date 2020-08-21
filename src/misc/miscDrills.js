@@ -1,6 +1,6 @@
 const { STORE } = require('../store/store');
 
-const { log, ifPalindromes , sortStack } = STORE;
+const { log, ifPalindromes , sortStack, langParser } = STORE;
 
 
 const palindromesDrill = () =>{
@@ -16,7 +16,13 @@ const palindromesDrill = () =>{
 
 const sortArrStack = () => {
   const test = [1,5,8,3,1,4,]; //8,5,4,3,1,1
-  const test2 = [3,1,2]; //3,2,1
+  const test2 = [3,1,2]; //3,2,1 [
   return sortStack(test);
 };
-log(sortArrStack());
+// log(sortArrStack());
+
+const iWantToGetOffMrBonesWildRide = (fun) =>{
+  log(langParser(fun));
+};
+
+iWantToGetOffMrBonesWildRide(sortArrStack);

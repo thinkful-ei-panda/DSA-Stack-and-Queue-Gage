@@ -174,6 +174,60 @@ A stack can be used to ensure that an arithmetic expression has balanced parenth
 **Extension extension exercise**: Also recognize 2 types of quote character: `""` and '`. Inside quotes, brackets aren't counted at all - in fact, nothing is counted until you reach the corresponding close quote.
 
 
+```
+  langParser : (fun) =>{
+    let funLang = fun.toString();
+
+    let open_P = 0;    // (
+    let closed_P = 0;  // )
+    let open_Cb = 0;   //{
+    let closed_Cb = 0; //}
+    let open_B = 0;    //[
+    let closed_B = 0;  //]
+    let pointer = 0;
+    let i = 0;
+    let message = '';
+
+    while( i < funLang.length){
+      if(funLang[i].match(/[\][{()}]/g)){
+        pointer = i + 1; 
+        if(funLang[i] === '(') open_P++, message = (errorStr)=>`open bracket for '(' around char ${i} in \n" ${errorStr}"\n isn't closed`;
+        if(funLang[i] === ')') closed_P++ , message = (errorStr)=>`closing bracket for ')' around char ${i} in \n" ${errorStr}"\n is expecting open tag`;
+        if(funLang[i] === '[') open_B++ , message = (errorStr)=>`open bracket for '[' around char ${i} in \n" ${errorStr}"\n isn't closed`;
+        if(funLang[i] === ']') closed_B++ , message = (errorStr)=>`closing bracket for ']' around char ${i} in \n" ${errorStr}"\n is expecting open tag`;
+        if(funLang[i] === '{') open_Cb++ , message = (errorStr)=>`open bracket for '{' around char ${i} in \n"${errorStr}"\n isn't closed`;
+        if(funLang[i] === '}') closed_Cb++ , message = (errorStr)=> `closing bracket for '}' around char ${i} in \n"${errorStr}" \n is expecting open tag`;
+      }
+      if( open_P === closed_P && open_B === closed_B && open_Cb === closed_Cb ){
+        pointer = 0;
+        message = ''; 
+      }
+      i++;
+    }
+    if(pointer){
+      // console.error(message);
+      let errorStr = '';
+      let nBefore ;
+      if(pointer > 12){
+        nBefore = pointer - 10;
+      }else{
+        nBefore = 0;
+      }
+      while(nBefore < pointer + 5  ){
+        if(funLang[nBefore]) errorStr += funLang[nBefore];
+        nBefore ++;
+      }
+      console.error(message(errorStr));
+      
+    }else{
+      return true; 
+    }
+    return false;
+  }
+```
+
+close enough, im not doing 3 atm that took to much time as is 
+
 
 
 ### Part 5: Sort stack
