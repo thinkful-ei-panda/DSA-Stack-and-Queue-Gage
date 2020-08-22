@@ -1,21 +1,41 @@
+/* eslint-disable eqeqeq */
 const STORE ={
-  starTrackTeam : [
+  starTrakTeam : [
     'Kirk',
     'Spock',
     'McCoy',
     'Scotty',
   ],
+  starTrakQ : [
+    'Kirk',
+    'Spock',
+    'Uhura',
+    'Sulu',
+    'Checkov'
+  ],
   log : console.log,
-  peak : (lis) =>{
+  peakStack : (lis) =>{
     if(typeof lis !== 'object') throw new Error('not an object');
 
     if(lis.top === null)
       return 'the stack is empty';
     return lis.top.data;
   },
+  peakQueue : (lis) =>{
+    if(typeof lis !== 'object') throw new Error('not an object');
+
+    if(lis.first == null)throw new Error('no content in submitted queue');
+
+    return lis.first.value;
+  },
   isEmpty : (lis)=>{
     if(typeof lis !== 'object') throw new Error('not an object');
     if(lis.top === null) return true;
+    return false;
+  },
+  queueIsEmpty: (lis)=>{
+    if(typeof lis !== 'object') throw new Error('not an object');
+    if(lis.first === null) return true;
     return false;
   },
   display : (lis) =>{
@@ -31,6 +51,19 @@ const STORE ={
     }
     return res; 
   },
+  displayQueue : (lis) => {
+    if(typeof lis !== 'object') throw new Error('not an object');
+
+    if(lis.first === null)return 'nothing to display';
+    let { first } = lis;
+    let res = '';
+    let i = 1;
+    while(first !== null){
+      res += `item ${i}: ${first.data}\n`;
+      first = first.next , i++ ;
+    }
+    return res; 
+  }
   removeTarget : (lis,target)=>{
     if(typeof lis !== 'object') throw new Error('not an object');
     const { top } = lis;

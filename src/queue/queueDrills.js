@@ -5,11 +5,18 @@ const { log } = STORE;
 
 const createList = () => {
   const QL = new Queue;
-  const {starTrackTeam } = STORE;
-  for(let i of starTrackTeam){
+  const {starTrakQ } = STORE;
+  for(let i of starTrakQ){
     QL.enqueue(i);
   }
   return QL;
 };
 
-log(createList);
+// let emptyTest = new Queue;
+
+// log(createList());
+// log(STORE.peakQueue(createList()));
+// log(STORE.queueIsEmpty(createList()));
+// log(STORE.queueIsEmpty(emptyTest));
+
+log(STORE.displayQueue(createList()));

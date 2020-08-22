@@ -5,13 +5,13 @@ const { log } = STORE;
 
 const contentPush = () => {
 
-  const { starTrackTeam } = STORE;
+  const { starTrakTeam } = STORE;
 
   const starTrak = new Stack;
 
   let i =0;
-  while(i <  starTrackTeam.length ){
-    starTrak.push(starTrackTeam[i]);
+  while(i <  starTrakTeam.length ){
+    starTrak.push(starTrakTeam[i]);
     i++;
   }
 
@@ -22,9 +22,10 @@ const contentPush = () => {
 
 
 // log(contentPush());
-// log(STORE.peak(contentPush()));
+// log(STORE.peakStack(contentPush()));
 // log(STORE.isEmpty(contentPush()));
 // log(STORE.isEmpty('throw error'));
 
 log(STORE.display(contentPush()));
+
 
