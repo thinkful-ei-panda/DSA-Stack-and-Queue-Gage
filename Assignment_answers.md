@@ -297,19 +297,73 @@ const createList = () => {
 
 - Implement a `display()` function outside of the `Queue` class that lets you display what's in the queue.
 
+```
+ displayQueue : (lis) => {
+    if(typeof lis !== 'object') throw new Error('not an object');
 
+    if(lis.first === null)return 'nothing to display';
+    let { first } = lis;
+    let res = '';
+    let i = 1;
+    while(first !== null){
+      res += `item ${i}: ${first.value}\n`;
+      first = first.next , i++ ;
+    }
+    return res; 
+  },
+```
 
 - Remove `Spock` from the queue and display the resulting queue.
+
+```
+removeTarget : (lis, target)=>{
+    if(typeof lis !== 'object') throw new Error('not an object');
+    const { top } = lis;
+    if(top === null) return 'nothing to remove';
+
+    let store = null, temp = top; 
+
+    if(temp !== null && temp.data.toLowerCase() === target.toLowerCase() ){
+      lis.top = temp.next;
+      return lis;
+    }
+
+    while((temp !== null) && (temp.data.toLowerCase() !== target.toLowerCase())){
+      store = temp;
+      temp = temp.next;
+    }
+    if(temp === null) return 'nothing could be found , nothing removed';
+    
+    store.next = temp.next; 
+
+    return lis.top = store; 
+  },
+```
 
 ### Part 7: Create a queue class using Doubly linked List
 Use the items listed in #6 and enqueue them to your queue.
 
 - Check to see who is first one on the Queue?
 
+```
+  peakQueue : (lis) =>{
+    if(typeof lis !== 'object') throw new Error('not an object');
+
+    if(lis.first == null)throw new Error('no content in submitted queue');
+
+    return lis.first.value;
+  },
+```
+it's Kirk 
 
 
 ### Part 8: Queue implementation using a stack
 There are many ways to implement a queue. You have learned using singly linked list, and doubly linked list. Keeping the concept of a queue in mind, implement a queue using 2 stacks and no other data structure. (You are not allowed to use a doubly linked list or array. Use your stack implementation with a linked list from above to solve this problem.)
+
+
+
+......what? isn't that just a stack? 
+im going to skip this one till i talk to my mentor
 
 
 
@@ -337,5 +391,143 @@ As people come to the dance floor, they should be paired off as quickly as possi
     - Female dancer is Beyonce, and the male dancer is Sherlock
     - There are 2 male dancers waiting to dance
 
+##### Log
+
+  ```
+$ node src/misc/dance.js
+Jacky is getting back in line
+Queue {
+  first: _Node { value: { name: 'Jacky', gender: 'F' }, next: null },
+  last: _Node { value: { name: 'Jacky', gender: 'F' }, next: null }
+}
+[
+  'Jane was paired up with Frank for the dance',
+  'Dave was paired up with Lesa for the dance',
+  'Joe was paired up with Caitlin for the dance',
+  'Dustin was paired up with Brittney for the dance',
+  'Jimmy was paired up with Madonna for the dance'
+]
+
+  ```
+
+##### code 
+
+```
+const dancePairing = () => {
+  const DanceQueue = new Queue;
+
+  let i = 0;
+  while(i< danceLine.length){
+    DanceQueue.enqueue(danceLine[i]);
+    i++;
+  }
+  let male = [],
+    female = [],
+    {first} = DanceQueue,
+    pairings = [];
+
+  while(first !== null){
+    if(first.value.gender === 'M'){
+      male.push(DanceQueue.dequeue());
+    }else{
+      female.push(DanceQueue.dequeue());
+    }
+    if(male.length && female.length){
+      let a = male.pop(), b = female.pop();
+      pairings.push(`${a.name} was paired up with ${b.name} for the dance`);
+    }
+    first = first.next;
+  }
+  if(male.length){
+    while(male.length){
+      log( `${male[0].name} is getting back in line`);
+      i++;
+      DanceQueue.enqueue(male.shift());
+    }
+  }
+  if(female.length){
+    while(female.length){
+      log( `${female[0].name} is getting back in line`);
+      i++;
+      DanceQueue.enqueue(female.shift());
+    }
+  }
+  log(DanceQueue);
+  return pairings;
+};
+```
+
+see `./src/misc/dance.js` for more details 
+
+
 ### Part 10: The Ophidian Bank
 At the Ophidian Bank, a single teller serves a long queue of people. New customers join the end of the queue, and the teller will serve a customer only if they have all of the appropriate paperwork. Write a representation of this queue; 25% of the time (random), a customer's paperwork isn't quite right, and it's back to the end of the queue. Show what a few minutes of the bank's lobby would look like.
+##### log
+
+```
+$ node src/misc/bank.js
+Neive Boyle successfully had information processed and is going to his other bank 
+Darien Greig successfully had information processed and is going to go back home to watch T.V.
+Keely Craft successfully had information processed and is going to go sit in the park and thing about life.
+Daniyal Payne successfully had information processed and is going to go back home to watch T.V.
+Marianna Hinton successfully had information processed and is going to go sit in the park and thing about life.
+Lemar Hughes seem to no completed his paper word and has to step out of line to do it again
+Mackenzie Hogan successfully had information processed and is going to go sit in the park and thing about life.
+Tilly-Mae Appleton successfully had information processed and is going to a salon to get a haircut
+Bevan O'Sullivan seem to no completed his paper word and has to step out of line to do it again
+Veer Howe successfully had information processed and is going to get pudding
+Kieron Vasquez successfully had information processed and is going to get pudding
+Conna Thomson successfully had information processed and is going to get a bite to eat
+Tulisa Bird successfully had information processed and is going to go sit in the park and thing about life.
+Rheanna Stacey successfully had information processed and is going to a salon to get a haircut
+Tyler Moon successfully had information processed and is going to a salon to get a haircut
+Holly Benitez successfully had information processed and is going to a salon to get a haircut
+Kareem Hammond successfully had information processed and is going to his other bank
+Shelby Brady successfully had information processed and is going to go sit in the park and thing about life.
+Mikayla Herman seem to no completed his paper word and has to step out of line to do it again
+Walid Weir successfully had information processed and is going home
+Erica Morrison successfully had information processed and is going to get a bite to eat
+Bevan O'Sullivan seem to no completed his paper word and has to step out of line to do it again
+Lemar Hughes seem to no completed his paper word and has to step out of line to do it again
+Tilly-Mae Appleton successfully had information processed and is going home
+Bevan O'Sullivan seem to no completed his paper word and has to step out of line to do it again
+Bevan O'Sullivan successfully had information processed and is going to go sit in the park and thing about life.
+Mikayla Herman successfully had information processed and is going back to work
+Conna Thomson successfully had information processed and is going to get pudding
+Bevan O'Sullivan successfully had information processed and is going to go back home to watch T.V.
+Darien Greig successfully had information processed and is going to go code up something
+Lemar Hughes successfully had information processed and is going to get a bite to eat
+Keely Craft successfully had information processed and is going to get a bite to eat
+Bevan O'Sullivan successfully had information processed and is going to a salon to get a haircut
+bank is now closed
+
+```
+
+##### code 
+```
+const bankTeller = () => {
+  const bank = new Queue;
+
+  let i = 0; 
+
+  while ( i < bankLine.length){
+    bank.enqueue(bankLine[i]);
+    i++;
+  }
+
+  while(bank.first !== null){
+    if(bank.first.value.paperWork){
+      log(`${bank.first.value.name} successfully had information processed and is ${doingSomeThing()} `);
+      bank.dequeue();
+    }else{
+      log(`${bank.first.value.name} seem to no completed his paper word and has to step out of line to do it again`);
+      bank.first.value.paperWork = paperWork();
+      bank.enqueue(bankLine[Math.floor(Math.random()*Math.floor(15))]);
+      bank.enqueue(bank.dequeue()); 
+    }
+  }
+  return 'bank is now closed';
+};
+```
+
+see `./src/misc/bank.js` for more details 

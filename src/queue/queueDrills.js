@@ -1,15 +1,20 @@
 const Queue = require('./queue');
 const { STORE } = require('../store/store');
 
-const { log } = STORE;
+const { log, displayQueue, removeTargetFromQueue } = STORE;
 
 const createList = () => {
   const QL = new Queue;
   const {starTrakQ } = STORE;
+  
   for(let i of starTrakQ){
     QL.enqueue(i);
   }
+
+  QL.top = removeTargetFromQueue(QL,'Spock');
+   
   return QL;
+
 };
 
 // let emptyTest = new Queue;
@@ -19,4 +24,4 @@ const createList = () => {
 // log(STORE.queueIsEmpty(createList()));
 // log(STORE.queueIsEmpty(emptyTest));
 
-log(STORE.displayQueue(createList()));
+log(displayQueue(createList()));

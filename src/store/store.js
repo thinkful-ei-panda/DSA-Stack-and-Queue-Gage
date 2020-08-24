@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 /* eslint-disable eqeqeq */
 const STORE ={
   starTrakTeam : [
@@ -12,6 +13,152 @@ const STORE ={
     'Uhura',
     'Sulu',
     'Checkov'
+  ],
+  danceLine : [
+    {
+      name : 'Jane',
+      gender : 'M',
+    },
+    {
+      name : 'Frank',
+      gender : 'F',
+    },
+    {
+      name : 'Lesa',
+      gender : 'F',
+    },
+    {
+      name : 'Dave',
+      gender : 'M',
+    },
+    {
+      name : 'Joe',
+      gender : 'M',
+    },
+    {
+      name : 'Caitlin',
+      gender : 'F',
+    },
+    {
+      name : 'Dustin',
+      gender : 'M',
+    },
+    {
+      name : 'Brittney',
+      gender : 'F',
+    },
+    {
+      name : 'Jimmy',
+      gender : 'M',
+    },
+    {
+      name : 'Madonna',
+      gender : 'F',
+    },
+    {
+      name : 'Jacky',
+      gender : 'F',
+    },
+
+  ],
+  bankLine : [
+    {
+      name : 'Neive Boyle',
+      paperWork : true,
+    },
+    {
+      name : 'Darien Greig',
+      paperWork : true,
+    },
+    {
+      name : 'Keely Craft',
+      paperWork : true,
+    },
+    {
+      name : 'Daniyal Payne',
+      paperWork : true,
+    },
+    {
+      name : 'Marianna Hinton',
+      paperWork : true,
+    },
+    {
+      name : 'Lemar Hughes',
+      paperWork : false,
+    },
+    {
+      name : 'Mackenzie Hogan',
+      paperWork : true,
+    },
+    {
+      name : 'Tilly-Mae Appleton',
+      paperWork : true,
+    },
+    {
+      name : `Bevan O'Sullivan`,
+      paperWork : false,
+    },
+    {
+      name : 'Veer Howe',
+      paperWork : true,
+    },
+    {
+      name : 'Kieron Vasquez',
+      paperWork : true,
+    },
+    {
+      name : 'Conna Thomson',
+      paperWork : true,
+    },
+    {
+      name : 'Tulisa Bird',
+      paperWork : true,
+    },
+    {
+      name : 'Rheanna Stacey',
+      paperWork : true,
+    },
+    {
+      name : 'Tyler Moon',
+      paperWork : true,
+    },
+    {
+      name : 'Holly Benitez',
+      paperWork : true,
+    },
+    {
+      name : 'Kareem Hammond',
+      paperWork : true,
+    },
+    {
+      name : 'Shelby Brady',
+      paperWork : true,
+    },
+    {
+      name : 'Mikayla Herman',
+      paperWork : false,
+    },
+    {
+      name : 'Walid Weir',
+      paperWork : true,
+    },
+    {
+      name : 'Erica Morrison',
+      paperWork : true,
+    },
+
+  ],
+  something :[
+    `going home`,
+    `going back to work`,
+    `going to his other bank`,
+    `going to hang out with friends`,
+    `going to go sit in the park and thing about life.`,
+    `going to go back home to watch T.V.`,
+    `going to a salon to get a haircut`,
+    `going to get pudding`,
+    `going to go code up something`,
+    `going to get a bite to eat`,
   ],
   log : console.log,
   peakStack : (lis) =>{
@@ -59,24 +206,24 @@ const STORE ={
     let res = '';
     let i = 1;
     while(first !== null){
-      res += `item ${i}: ${first.data}\n`;
+      res += `item ${i}: ${first.value}\n`;
       first = first.next , i++ ;
     }
     return res; 
-  }
-  removeTarget : (lis,target)=>{
+  },
+  removeTarget : (lis, target)=>{
     if(typeof lis !== 'object') throw new Error('not an object');
     const { top } = lis;
     if(top === null) return 'nothing to remove';
 
     let store = null, temp = top; 
 
-    if(temp !== null && temp.data === target ){
+    if(temp !== null && temp.data.toLowerCase() === target.toLowerCase() ){
       lis.top = temp.next;
       return lis;
     }
 
-    while((temp !== null) && (temp.data !== target)){
+    while((temp !== null) && (temp.data.toLowerCase() !== target.toLowerCase())){
       store = temp;
       temp = temp.next;
     }
@@ -86,6 +233,30 @@ const STORE ={
 
     return lis.top = store; 
   },
+  removeTargetFromQueue : (lis, target) => {
+    if(typeof lis !== 'object') throw new Error('not an object');
+    const { first } = lis;
+    if(first === null) return 'nothing to remove';
+
+    let store = null, temp = first; 
+
+    if(temp !== null && temp.value === target ){
+      lis.top = temp.next;
+      return lis;
+    }
+
+    while((temp !== null) && (temp.value !== target)){
+      store = temp;
+      temp = temp.next;
+    }
+    if(temp === null) return 'nothing could be found , nothing removed';
+    
+    store.next = temp.next; 
+
+    return lis.top = store; 
+
+  },
+  /***** OTHER *****/
   ifPalindromes  : (str) => {
     str = str.toLowerCase().replace(/[^a-zA-Z0-9]/g,'');
     if(typeof str !== 'string'){
@@ -171,6 +342,12 @@ const STORE ={
 
 };
 
+
+const   doingSomeThing = () => {
+  const r = Math.floor(Math.random() * Math.floor(10));
+  return STORE.something[r];
+};
+
 module.exports= {
-  STORE,
+  STORE, doingSomeThing,
 }; 
